@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap");
+
+body {
+  color: #354259;
+}
+
+a {
+  text-decoration: none;
+}
+
+.wrapper {
+  max-width: 700px;
+  min-width: 500px;
+  margin: 5% auto;
+  padding-bottom: 2%;
+  background-color: #ece5c7;
+}
+
+.app-header {
+  background-color: #c2ded1 !important;
+}
+
+.cockvane {
+  width: 90px;
+}
+
+.logo-title {
+  font-family: "Gochi Hand", cursive;
+  font-size: 50px;
+  color: #354259;
+  position: relative;
+  top: 5px;
+  left: -20px;
+}
+
+.logo-title:hover {
+  color: #354259;
+  border-color: #354259;
+}
+
+.btn-outline-success {
+  --bs-btn-color: #354259;
+  --bs-btn-border-color: #354259;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #354259;
+  --bs-btn-hover-border-color: #354259;
+  --bs-btn-focus-shadow-rgb: 53, 66, 89;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #354259;
+  --bs-btn-active-border-color: #354259;
+  --bs-btn-active-shadow: inset 0 3px 5pxrgba (0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #354259;
+  --bs-btn-disabled-bg: transparent;
+  --bs-gradient: none;
+}
+
+.weather-in-city {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-size: 20px;
+}
+
+.find-me-button {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.nav-tabs {
+  margin: 20px 20px 0px 20px;
+  border-color: #cdc2ae !important;
+  border-bottom: none;
+}
+
+.tab-content {
+  margin: 0 20px 20px 20px;
+  background-color: #cdc2ae !important;
+  padding: 4% 0 4% 0;
+}
+
+.nav-link.active {
+  background-color: #cdc2ae !important;
+  border-color: #cdc2ae !important;
+  border-bottom: none;
+  font-weight: 700;
+}
+
+.nav-link {
+  width: 100%;
+  color: #354259;
+}
+
+.nav-link:hover {
+  border-color: #cdc2ae !important;
+  border-bottom: none;
+  color: #354259;
+  font-weight: 500;
+}
+
+.nav-link.active:hover {
+  font-weight: 700;
+}
+
+.nav-item {
+  width: 20%;
+}
+
+.day-icon {
+  width: 45px;
+}
+
+.day-big {
+  text-align: center;
+  font-size: 18px;
+}
+.day-big-icon {
+  width: 100%;
+}
+
+.card {
+  background-color: #c2ded1 !important;
+}
