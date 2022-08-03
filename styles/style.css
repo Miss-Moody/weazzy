@@ -11,9 +11,14 @@ a {
 .wrapper {
   max-width: 700px;
   min-width: 500px;
-  margin: 5% auto;
+  margin: 5% auto 0 auto;
   padding-bottom: 2%;
   background-color: #ece5c7;
+}
+
+.footer {
+  margin: 2% auto;
+  text-align: center;
 }
 
 .app-header {
