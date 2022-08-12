@@ -5,7 +5,17 @@ body {
 }
 
 a {
+  color: #26a6d4;
   text-decoration: none;
+}
+
+a.active {
+  color: #354259;
+  cursor: default;
+}
+
+a.active:hover {
+  color: #354259;
 }
 
 .wrapper {

@@ -48,10 +48,10 @@ function formatTime(today) {
 
 //displaying the current weather and the name of the current searched city and the icon according to the weather
 function showWeather(response) {
+  celsiusTemperature = response.data.main.temp; // calling the global variable celsiusTemperature and giving it the realtime current temperature value through API
   document.querySelector("#current-city").innerHTML = response.data.name;
-  document.querySelector("#temperature").innerHTML = Math.round(
-    response.data.main.temp
-  );
+  document.querySelector("#temperature").innerHTML =
+    Math.round(celsiusTemperature);
   document.querySelector("#wind").innerHTML = response.data.wind.speed;
   document.querySelector("#pressure").innerHTML = response.data.main.pressure;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
@@ -108,14 +108,19 @@ function getCurrentLocation(event) {
 
 function convertToFahrenheit(event) {
   event.preventDefault();
+  celsiusLink.classList.remove("active"); //remove the active class from the celsius link
+  fahrenheitLink.classList.add("active"); //add the active class to the fahrenheit link
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32; //using the value of the global variable celsiusTemperature, which has already received the current temperature value through API using showWeather function
   let temperature = document.querySelector("#temperature");
-  temperature.innerHTML = "+68 ";
+  temperature.innerHTML = Math.round(fahrenheitTemperature);
 }
 
 function convertToCelsius(event) {
   event.preventDefault();
+  celsiusLink.classList.add("active"); //add the active class to the celsius link
+  fahrenheitLink.classList.remove("active"); //remove the active class from the fahrenheit link
   let temperature = document.querySelector("#temperature");
-  temperature.innerHTML = "+20 ";
+  temperature.innerHTML = Math.round(celsiusTemperature); //when user clicks convert-to-celsius link, the app returns the celsiusTemperature value (global variable), received from the API
 }
 
 //displaying the name of the current day on the Today's page
@@ -136,6 +141,7 @@ let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleCitySearchSubmit);
 
 //adding temperature convertion
+let celsiusTemperature = null; //global variable accessible from anywhere including functions, its initial empty value is null, later using it in convertToFahrenheit function and getting its realtime value through API in showWeather function
 let celsiusLink = document.querySelector("#celsius");
 let fahrenheitLink = document.querySelector("#fahrenheit");
 fahrenheitLink.addEventListener("click", convertToFahrenheit);
