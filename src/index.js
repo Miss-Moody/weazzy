@@ -112,7 +112,11 @@ function convertToFahrenheit(event) {
   fahrenheitLink.classList.add("active"); //add the active class to the fahrenheit link
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32; //using the value of the global variable celsiusTemperature, which has already received the current temperature value through API using showWeather function
   let temperature = document.querySelector("#temperature");
+  let temperatureSmall = document.querySelector("#temperature-small");
+  let unitSmall = document.querySelector("#unit-small");
   temperature.innerHTML = Math.round(fahrenheitTemperature);
+  temperatureSmall.innerHTML = Math.round(fahrenheitTemperature); //change the temperature from Celsius to Fahrenheit in the current day tab
+  unitSmall.innerHTML = "°F"; //change the unit from Celsius to Fahrenheit in the current day tab;
 }
 
 function convertToCelsius(event) {
@@ -120,7 +124,11 @@ function convertToCelsius(event) {
   celsiusLink.classList.add("active"); //add the active class to the celsius link
   fahrenheitLink.classList.remove("active"); //remove the active class from the fahrenheit link
   let temperature = document.querySelector("#temperature");
+  let temperatureSmall = document.querySelector("#temperature-small");
+  let unitSmall = document.querySelector("#unit-small");
   temperature.innerHTML = Math.round(celsiusTemperature); //when user clicks convert-to-celsius link, the app returns the celsiusTemperature value (global variable), received from the API
+  temperatureSmall.innerHTML = Math.round(celsiusTemperature); //change the temperature from Fahrenheit to Celsius in the current day tab
+  unitSmall.innerHTML = "°C"; //change the unit from Fahrenheit to Celsius in the current day tab;
 }
 
 //displaying the name of the current day on the Today's page
