@@ -1,3 +1,4 @@
+//converting days' numbers to their names
 function showDay(today) {
   let days = [
     "Sunday",
@@ -10,6 +11,27 @@ function showDay(today) {
   ];
   let currentDay = days[today.getDay()];
   return currentDay;
+}
+
+//converting months' numbers to their names
+
+function showMonth(today) {
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let currentMonth = months[today.getMonth()];
+  return currentMonth;
 }
 
 function formatTime(today) {
@@ -46,6 +68,16 @@ function showWeather(response) {
   document
     .querySelector("#day-big-icon")
     .setAttribute("alt", response.data.weather[0].main);
+  //small temperature and icon in the day tab
+  document.querySelector("#temperature-small").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document
+    .querySelector("#day-icon-small")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
 }
 
 //making an API call to find the city + calling the function for displaying weather in it
@@ -86,10 +118,14 @@ function convertToCelsius(event) {
   temperature.innerHTML = "+20 ";
 }
 
-//displaying the name of the current day on the Today tab
+//displaying the name of the current day on the Today's page
 let now = new Date();
 let day1 = document.querySelector("#day-1");
 day1.innerHTML = showDay(now);
+
+//displaying the date (number of the current day) and current month on the Today's tab
+let dateToday = document.querySelector("#date-today");
+dateToday.innerHTML = `${now.getDate()} ${showMonth(now)}`;
 
 //displaying the current time on the Today tab
 let currentTime = document.querySelector("#current-time");
