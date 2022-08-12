@@ -24,7 +24,7 @@ function formatTime(today) {
   return `${hours}:${minutes}`;
 }
 
-//displaying the current weather and the name of the current searched city
+//displaying the current weather and the name of the current searched city and the icon according to the weather
 function showWeather(response) {
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#temperature").innerHTML = Math.round(
@@ -35,6 +35,17 @@ function showWeather(response) {
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#weather-description").innerHTML =
     response.data.weather[0].main;
+  //dynamic icon
+  document
+    .querySelector("#day-big-icon")
+    .setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+  //dynamic icon alt attribute = description
+  document
+    .querySelector("#day-big-icon")
+    .setAttribute("alt", response.data.weather[0].main);
 }
 
 //making an API call to find the city + calling the function for displaying weather in it
@@ -94,8 +105,9 @@ let fahrenheitLink = document.querySelector("#fahrenheit");
 fahrenheitLink.addEventListener("click", convertToFahrenheit);
 celsiusLink.addEventListener("click", convertToCelsius);
 
-// handles click on Find me button, determines current location
+//handles click on Find me button, determines current location
 let currentLocationButton = document.querySelector("#find-me-button");
 currentLocationButton.addEventListener("click", getCurrentLocation);
 
+// showing default city
 searchCity("Stockholm");
