@@ -137,7 +137,7 @@ function showFact(response) {
 
 // reaching the fact API URL
 function apiFact() {
-  let apiFactUrl = `https://numbersapi.com/${
+  let apiFactUrl = `http://numbersapi.com/${
     now.getMonth() + 1
   }/${now.getDate()}/date`;
   axios.get(apiFactUrl).then(showFact);
