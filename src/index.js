@@ -130,6 +130,18 @@ function convertToCelsius(event) {
   temperatureSmall.innerHTML = Math.round(celsiusTemperature); //change the temperature from Fahrenheit to Celsius in the current day tab
   unitSmall.innerHTML = "°C"; //change the unit from Fahrenheit to Celsius in the current day tab;
 }
+// displaying the fact of the day
+function showFact(response) {
+  document.querySelector("#day-fact").innerHTML = response.data;
+}
+
+// reaching the fact API URL
+function apiFact() {
+  let apiFactUrl = `http://numbersapi.com/${
+    now.getMonth() + 1
+  }/${now.getDate()}/date`;
+  axios.get(apiFactUrl).then(showFact);
+}
 
 //displaying the name of the current day on the Today's page
 let now = new Date();
@@ -161,3 +173,5 @@ currentLocationButton.addEventListener("click", getCurrentLocation);
 
 // showing default city
 searchCity("Stockholm");
+
+apiFact();
