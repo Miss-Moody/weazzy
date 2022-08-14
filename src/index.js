@@ -85,6 +85,9 @@ function searchCity(city) {
   let apiKey = "5f88737082e422aa9d05e764356880e9";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeather);
+  unitSmall.innerHTML = "°C";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 }
 
 //handles the search when user presses the Search button + calls the function for displaying weather in it
@@ -99,6 +102,9 @@ function searchLocation(position) {
   let apiKey = "5f88737082e422aa9d05e764356880e9";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeather);
+  unitSmall.innerHTML = "°C";
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 }
 
 function getCurrentLocation(event) {
@@ -113,7 +119,6 @@ function convertToFahrenheit(event) {
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32; //using the value of the global variable celsiusTemperature, which has already received the current temperature value through API using showWeather function
   let temperature = document.querySelector("#temperature");
   let temperatureSmall = document.querySelector("#temperature-small");
-  let unitSmall = document.querySelector("#unit-small");
   temperature.innerHTML = Math.round(fahrenheitTemperature);
   temperatureSmall.innerHTML = Math.round(fahrenheitTemperature); //change the temperature from Celsius to Fahrenheit in the current day tab
   unitSmall.innerHTML = "°F"; //change the unit from Celsius to Fahrenheit in the current day tab;
@@ -125,7 +130,6 @@ function convertToCelsius(event) {
   fahrenheitLink.classList.remove("active"); //remove the active class from the fahrenheit link
   let temperature = document.querySelector("#temperature");
   let temperatureSmall = document.querySelector("#temperature-small");
-  let unitSmall = document.querySelector("#unit-small");
   temperature.innerHTML = Math.round(celsiusTemperature); //when user clicks convert-to-celsius link, the app returns the celsiusTemperature value (global variable), received from the API
   temperatureSmall.innerHTML = Math.round(celsiusTemperature); //change the temperature from Fahrenheit to Celsius in the current day tab
   unitSmall.innerHTML = "°C"; //change the unit from Fahrenheit to Celsius in the current day tab;
@@ -152,6 +156,7 @@ searchForm.addEventListener("submit", handleCitySearchSubmit);
 let celsiusTemperature = null; //global variable accessible from anywhere including functions, its initial empty value is null, later using it in convertToFahrenheit function and getting its realtime value through API in showWeather function
 let celsiusLink = document.querySelector("#celsius");
 let fahrenheitLink = document.querySelector("#fahrenheit");
+let unitSmall = document.querySelector("#unit-small");
 fahrenheitLink.addEventListener("click", convertToFahrenheit);
 celsiusLink.addEventListener("click", convertToCelsius);
 
