@@ -164,10 +164,8 @@ celsiusLink.addEventListener("click", convertToCelsius);
 let currentLocationButton = document.querySelector("#find-me-button");
 currentLocationButton.addEventListener("click", getCurrentLocation);
 
-// displaying the fact of the day
-let apiFactUrl = `http://numbersapi.com/${
-  now.getMonth() + 1
-}/${now.getDate()}/date`;
+//displaying fact of the day
+let apiFactUrl = `https://uselessfacts.jsph.pl/random.json?language=en`;
 fetch(apiFactUrl)
   .then(async function (response) {
     let text = await response.text();
