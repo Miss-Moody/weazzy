@@ -164,5 +164,19 @@ celsiusLink.addEventListener("click", convertToCelsius);
 let currentLocationButton = document.querySelector("#find-me-button");
 currentLocationButton.addEventListener("click", getCurrentLocation);
 
+// displaying the fact of the day
+let apiFactUrl = `http://numbersapi.com/${
+  now.getMonth() + 1
+}/${now.getDate()}/date`;
+fetch(apiFactUrl)
+  .then(async function (response) {
+    let text = await response.text();
+    document.querySelector("#day-fact").innerHTML = text;
+    console.log(text);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
 // showing default city
 searchCity("Stockholm");
