@@ -166,9 +166,9 @@ currentLocationButton.addEventListener("click", getCurrentLocation);
 
 //displaying fact of the day
 let apiFactUrl = `https://uselessfacts.jsph.pl/random.json?language=en`;
-fetch(apiFactUrl)
+fetch(apiFactUrl, { headers: { "Content-Type": "application/json" } })
   .then(async function (response) {
-    let text = await response.text();
+    let { text } = JSON.parse(await response.text());
     document.querySelector("#day-fact").innerHTML = text;
     console.log(text);
   })
