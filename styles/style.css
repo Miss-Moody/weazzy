@@ -83,8 +83,7 @@ a.active:hover {
 
 .nav-tabs {
   margin: 20px 20px 0px 20px;
-  border-color: #cdc2ae !important;
-  border-bottom: none;
+  --bs-nav-tabs-border-width: 0;
 }
 
 .tab-content {
@@ -103,21 +102,29 @@ a.active:hover {
 .nav-link {
   width: 100%;
   color: #354259;
+  text-align: center;
+  border: none;
 }
 
 .nav-link:hover {
-  border-color: #cdc2ae !important;
-  border-bottom: none;
+  border-color: #ece5c7 !important;
   color: #354259;
-  font-weight: 500;
-}
-
-.nav-link.active:hover {
-  font-weight: 700;
+  border-radius: 0;
 }
 
 .nav-item {
   width: 20%;
+}
+
+.nav-item:first-child {
+  background-color: #cdc2ae !important;
+  border: none;
+  font-weight: 700;
+}
+.nav-item:first-child:hover {
+  background-color: #cdc2ae !important;
+  border: none;
+  font-weight: 700;
 }
 
 .day-icon {
@@ -134,4 +141,10 @@ a.active:hover {
 
 .card {
   background-color: #c2ded1 !important;
+}
+
+.weather-param {
+  font-size: 17px;
+  font-weight: 500;
+  padding: 5% 0% 0% 3%;
 }

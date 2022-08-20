@@ -1,4 +1,4 @@
-//converting days' numbers to their names
+//converting days' numbers to their names (for today)
 function showDay(today) {
   let days = [
     "Sunday",
@@ -13,9 +13,35 @@ function showDay(today) {
   return currentDay;
 }
 
-//converting months' numbers to their names
+function formatTime(today) {
+  let hours = today.getHours();
+  let minutes = today.getMinutes();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  return `${hours}:${minutes}`;
+}
 
-function showMonth(today) {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000); // timestamp is converted to date according to the formula
+  let day = date.getDay(); // gives an index of a day (a number)
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day]; // returning a name of the day from the array with its index
+}
+
+function formatDayNumber(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let dateNumber = date.getDate();
+  return dateNumber;
+}
+
+//converting months' numbers to their names
+function formatMonth(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let month = date.getMonth(); // gives an index of a month (a number)
   let months = [
     "Jan",
     "Feb",
@@ -30,25 +56,50 @@ function showMonth(today) {
     "Nov",
     "Dec",
   ];
-  let currentMonth = months[today.getMonth()];
-  return currentMonth;
+  return months[month]; // returning a name of the month from the array with its index
 }
 
-function formatTime(today) {
-  let hours = today.getHours();
-  let minutes = today.getMinutes();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  return `${hours}:${minutes}`;
+function displayForecast(response) {
+  console.log(response.data.daily);
+  let forecast = response.data.daily;
+  let forecastElement = document.querySelector("#myTab");
+  let forecastHTML = "";
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 5)
+      // index - is the parameter, that is equal to array index (0 - first day, 1 - second...), we display the number of days, that we need (no more than that)
+      forecastHTML =
+        forecastHTML +
+        `<li class="nav-item" role="presentation">      
+              <div
+                class="nav-link"
+                              >
+                <div class="day">
+                  ${formatDay(forecastDay.dt)}<br />
+                  <img class="day-icon" id="day-icon-small" src="http://openweathermap.org/img/wn/${
+                    forecastDay.weather[0].icon
+                  }@2x.png" /> <span id="temperature-small">${Math.round(
+          forecastDay.temp.day
+        )}</span><span id="unit-small">°</span><br />
+                  <span id="date-today">${formatDayNumber(
+                    forecastDay.dt
+                  )} ${formatMonth(forecastDay.dt)}</span>
+                </div>
+              </div>
+            </li>`;
+  });
+  forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  let apiKey = "5f88737082e422aa9d05e764356880e9";
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiForecastUrl).then(displayForecast);
 }
 
 //displaying the current weather and the name of the current searched city and the icon according to the weather
 function showWeather(response) {
-  celsiusTemperature = response.data.main.temp; // calling the global variable celsiusTemperature and giving it the realtime current temperature value through API
+  let celsiusTemperature = response.data.main.temp; // calling the global variable celsiusTemperature and giving it the realtime current temperature value through API
   document.querySelector("#current-city").innerHTML = response.data.name;
   document.querySelector("#temperature").innerHTML =
     Math.round(celsiusTemperature);
@@ -68,16 +119,8 @@ function showWeather(response) {
   document
     .querySelector("#day-big-icon")
     .setAttribute("alt", response.data.weather[0].main);
-  //small temperature and icon in the day tab
-  document.querySelector("#temperature-small").innerHTML = Math.round(
-    response.data.main.temp
-  );
-  document
-    .querySelector("#day-icon-small")
-    .setAttribute(
-      "src",
-      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    );
+
+  getForecast(response.data.coord);
 }
 
 //making an API call to find the city + calling the function for displaying weather in it
@@ -85,9 +128,6 @@ function searchCity(city) {
   let apiKey = "5f88737082e422aa9d05e764356880e9";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeather);
-  unitSmall.innerHTML = "°C";
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
 }
 
 //handles the search when user presses the Search button + calls the function for displaying weather in it
@@ -102,9 +142,6 @@ function searchLocation(position) {
   let apiKey = "5f88737082e422aa9d05e764356880e9";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showWeather);
-  unitSmall.innerHTML = "°C";
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
 }
 
 function getCurrentLocation(event) {
@@ -112,37 +149,10 @@ function getCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
 
-function convertToFahrenheit(event) {
-  event.preventDefault();
-  celsiusLink.classList.remove("active"); //remove the active class from the celsius link
-  fahrenheitLink.classList.add("active"); //add the active class to the fahrenheit link
-  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32; //using the value of the global variable celsiusTemperature, which has already received the current temperature value through API using showWeather function
-  let temperature = document.querySelector("#temperature");
-  let temperatureSmall = document.querySelector("#temperature-small");
-  temperature.innerHTML = Math.round(fahrenheitTemperature);
-  temperatureSmall.innerHTML = Math.round(fahrenheitTemperature); //change the temperature from Celsius to Fahrenheit in the current day tab
-  unitSmall.innerHTML = "°F"; //change the unit from Celsius to Fahrenheit in the current day tab;
-}
-
-function convertToCelsius(event) {
-  event.preventDefault();
-  celsiusLink.classList.add("active"); //add the active class to the celsius link
-  fahrenheitLink.classList.remove("active"); //remove the active class from the fahrenheit link
-  let temperature = document.querySelector("#temperature");
-  let temperatureSmall = document.querySelector("#temperature-small");
-  temperature.innerHTML = Math.round(celsiusTemperature); //when user clicks convert-to-celsius link, the app returns the celsiusTemperature value (global variable), received from the API
-  temperatureSmall.innerHTML = Math.round(celsiusTemperature); //change the temperature from Fahrenheit to Celsius in the current day tab
-  unitSmall.innerHTML = "°C"; //change the unit from Fahrenheit to Celsius in the current day tab;
-}
-
 //displaying the name of the current day on the Today's page
 let now = new Date();
 let day1 = document.querySelector("#day-1");
 day1.innerHTML = showDay(now);
-
-//displaying the date (number of the current day) and current month on the Today's tab
-let dateToday = document.querySelector("#date-today");
-dateToday.innerHTML = `${now.getDate()} ${showMonth(now)}`;
 
 //displaying the current time on the Today tab
 let currentTime = document.querySelector("#current-time");
@@ -151,14 +161,6 @@ currentTime.innerHTML = formatTime(now);
 //displaying the name of the searched city
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleCitySearchSubmit);
-
-//adding temperature convertion
-let celsiusTemperature = null; //global variable accessible from anywhere including functions, its initial empty value is null, later using it in convertToFahrenheit function and getting its realtime value through API in showWeather function
-let celsiusLink = document.querySelector("#celsius");
-let fahrenheitLink = document.querySelector("#fahrenheit");
-let unitSmall = document.querySelector("#unit-small");
-fahrenheitLink.addEventListener("click", convertToFahrenheit);
-celsiusLink.addEventListener("click", convertToCelsius);
 
 //handles click on Find me button, determines current location
 let currentLocationButton = document.querySelector("#find-me-button");
@@ -170,7 +172,6 @@ fetch(apiFactUrl, { headers: { "Content-Type": "application/json" } })
   .then(async function (response) {
     let { text } = JSON.parse(await response.text());
     document.querySelector("#day-fact").innerHTML = text;
-    console.log(text);
   })
   .catch(function (error) {
     console.log(error);
