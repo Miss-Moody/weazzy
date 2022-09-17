@@ -2,6 +2,7 @@
 
 body {
   color: #354259;
+  background-image: url(/media/bg.svg);
 }
 
 a {
@@ -24,6 +25,7 @@ a.active:hover {
   margin: 5% auto 0 auto;
   padding-bottom: 2%;
   background-color: #ece5c7;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 
 .footer {
