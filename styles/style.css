@@ -28,6 +28,10 @@ a.active:hover {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
 }
 
+.container-fluid {
+  padding: 0 20px;
+}
+
 .footer {
   margin: 2% auto;
   text-align: center;
@@ -39,6 +43,9 @@ a.active:hover {
 
 .cockvane {
   width: 90px;
+  position: relative;
+  top: 0px;
+  left: -20px;
 }
 
 .logo-title {
@@ -47,7 +54,7 @@ a.active:hover {
   color: #354259;
   position: relative;
   top: 5px;
-  left: -20px;
+  left: -40px;
 }
 
 .logo-title:hover {
@@ -55,7 +62,7 @@ a.active:hover {
   border-color: #354259;
 }
 
-.btn-outline-success {
+.search-button {
   --bs-btn-color: #354259;
   --bs-btn-border-color: #354259;
   --bs-btn-hover-color: #fff;
